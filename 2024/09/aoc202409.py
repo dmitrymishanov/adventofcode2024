@@ -2,6 +2,7 @@
 
 import pathlib
 import sys
+import time
 from collections.abc import Callable
 
 
@@ -98,12 +99,18 @@ def part2(disk: list[int | str]) -> int:
 
 def solve(puzzle_input):
     data = parse_input(puzzle_input)
-    yield part1(data)
-    yield part2(data)
+    start = time.monotonic()
+    r1 = part1(data)
+    p1 = time.monotonic()
+    print(f"Part 1: {p1-start:.6f}s")
+    print(f"Result: {r1}")
+    r2 = part2(data)
+    p2 = time.monotonic()
+    print(f"Part 2: {p2 - p1:.6f}s")
+    print(f"Result: {r2}")
 
 
 if __name__ == "__main__":
     for path in sys.argv[1:]:
         print(f"\n{path}:")
-        solutions = solve(puzzle_input=pathlib.Path(path).read_text().rstrip())
-        print("\n".join(str(solution) for solution in solutions))
+        solve(puzzle_input=pathlib.Path(path).read_text().rstrip())
