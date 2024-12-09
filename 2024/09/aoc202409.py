@@ -56,7 +56,7 @@ def move_file_fragmented(
 
 
 def move_full_file(
-    disk: list[str | None],
+    disk: list[int | str],
     space_index: int,
     file_index: int,
 ) -> tuple[int, int]:
