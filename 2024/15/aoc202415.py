@@ -71,11 +71,11 @@ def show(matrix: list[list[str]]) -> None:
             f.write("\n".join("".join(line) for line in matrix))
 
 
-def get_result(matrix: list[list[str]]) -> int:
+def get_result(matrix: list[list[str]], symbol: str) -> int:
     result = 0
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
-            if matrix[i][j] == "O":
+            if matrix[i][j] == symbol:
                 result += i * 100 + j
 
     return result
@@ -87,11 +87,29 @@ def part1(data: Data) -> int:
     for move in data.moves:
         robot = make_move(robot, data.matrix, move)
         show(data.matrix)
-    return get_result(data.matrix)
+    return get_result(data.matrix, "O")
+
+
+def make_matrix_wider(matrix: list[list[str]]) -> list[list[str]]:
+    new_matrix = []
+    for line in matrix:
+        new_line = []
+        for symbol in line:
+            if symbol in "#.":
+                new_line.extend([symbol, symbol])
+            elif symbol == "O":
+                new_line.extend(["[", "]"])
+            elif symbol == "@":
+                new_line.extend(["@", "."])
+        new_matrix.append(new_line)
+    return new_matrix
 
 
 def part2(data: Data) -> int:
-    pass
+    matrix = make_matrix_wider(data.matrix)
+    show(matrix)
+    # TODO
+    return get_result(matrix, "[")
 
 
 def solve(puzzle_input):
